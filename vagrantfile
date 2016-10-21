@@ -1,0 +1,18 @@
+$script = <<SCRIPT
+cat >/tmp/fundasource.list<<EOL
+###### Ubuntu Main Repos
+deb http://172.20.0.36/ubuntu/ precise main restricted universe multiverse
+###### Ubuntu Update Repos
+deb http://172.20.0.36/ubuntu/ precise-security main restricted universe multiverse
+deb http://172.20.0.36/ubuntu/ precise-updates main restricted universe multiverse
+deb http://172.20.0.36/ubuntu/ precise-backports main restricted universe multiverse
+###### Ubuntu Partner Repo
+deb http://172.20.0.36/archive/ubuntu precise partner
+###### Ubuntu Extras Repo
+deb http://172.20.0.36/extras/ubuntu precise main
+EOL
+sudo mv /etc/apt/sources.list /etc/apt/sources.list.old
+sudo cp /tmp/fundasource.list /etc/apt/sources.list
+wget -q "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x16126D3A3E5C1192" -O- | sudo apt-key add -
+sudo apt-get update
+SCRIPT
